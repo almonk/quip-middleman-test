@@ -7,9 +7,13 @@ module QuipHelper
                   headers: {
                     "Authorization" => "Bearer #{token}"
                   })
-
-    json = JSON.parse(response.body)
-
-    return json['html']
+    
+    begin
+      json = JSON.parse(response.body)
+      puts "Imported Quip Document: #{json['thread']['title']}"
+      return json['html']
+    rescue StandardError=>e
+      "Error: #{e}"
+    end
   end
 end
